@@ -1,0 +1,44 @@
+ /* Стилі для блоку "logged-in-section" */
+#logged-in-section {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #f0f0f0;
+    background-color: #f0f0f0;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/* Стилі для іконки користувача */
+.user-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+/* Стилі для ім'я користувача */
+#username {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+    margin-right: 5px;
+}
+
+/* Стилі для посилання "Logout" */
+a {
+  margin-left: auto;
+  font-size: 16px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+.error-message {
+    color: red;
+    margin-top: 5px;
+    font-size: 14px;
+}

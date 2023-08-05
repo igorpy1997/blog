@@ -1,0 +1,190 @@
+
+        body {
+            background-image: url("/static/images/main_background.jpg");
+            background-size: cover;
+
+}
+
+        .login-section {
+            display: grid;
+  grid-template-rows: auto 1fr; /* Первая строка автоматическая высота, вторая занимает остаток доступного пространства */
+  place-items: center;
+    transform: translateX(-200px);
+            place-items: center;
+
+ }
+
+
+.form-control {
+    width: fit-content;
+    height: 30px;
+    padding: 8px 12px;
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s; /* Добавить плавные переходы */
+}
+.form-control:hover{
+     box-shadow: 0 0 5px rgba(0, 0, 0, 0.9);
+}
+
+.container.text-center{
+  width: 200px;
+  height: 100px;
+  border: 3px solid;
+  border-image: linear-gradient(45deg, #ff6b6b, #ff6b6b) 30;
+  border-image-slice: 1;
+}
+
+@keyframes rotateBorder {
+  0% {
+    border-image: linear-gradient(45deg, #8B4513, #8B4513) 30;
+  }
+  100% {
+    border-image: linear-gradient(45deg, #f0f0f0, #f0f0f0, #f0f0f0, #f0f0f0) 30;
+  }
+}
+
+
+
+
+.display-4 {
+    font-size: 2rem; /* Увеличиваем размер шрифта */
+    color: #FFF8DC; /* Светло-желтый цвет текста */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Добавляем тень для текста */
+}
+
+/* Стили для подзаголовка */
+.lead {
+    font-size: 1.25rem; /* Увеличиваем размер шрифта */
+    color: #FFF8DC; /* Светло-желтый цвет текста */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Добавляем тень для текста */
+}
+
+
+.form-control:focus {
+    border-color: #007bff; /* Задать цвет рамки при фокусе */
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Задать тень при фокусе */
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column; /* Кнопки будут располагаться вертикально */
+  align-items: center; /* Выравнивание по центру по горизонтали */
+  width: 300px; /* Задайте нужную ширину контейнеру */
+}
+
+
+.btn.btn-primary {
+  height: 30px;
+    width: 100px;
+  font-size: 0.8em;
+  padding: 1px 10px;
+  background-color: #FFF8DC;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+    color: #8B4513; /* Коричневый цвет текста */
+  border: 1px solid #8B4513; /* Коричневая рамка вокруг кнопки */
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.btn.btn-primary:hover {
+  background: linear-gradient(45deg, #ff6b6b, #ff6b6b);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #8B4513;
+}
+
+
+.btn.btn-link {
+  color: #8B4513; /* Коричневый цвет текста */
+  background-color: #FFF8DC; /* Светло-желтый фон */
+  border: 1px solid #8B4513; /* Коричневая рамка вокруг кнопки */
+  border-radius: 5px; /* Закругленные углы */
+  padding: 5px 10px; /* Отступы внутри кнопки */
+  text-decoration: none; /* Убираем подчеркивание у ссылки */
+  transition: background-color 0.3s, color 0.3s; /* Плавный переход цвета при наведении */
+}
+
+.btn.btn-link:hover {
+  background-color: #8B4513; /* Коричневый фон при наведении */
+  color: #FFF8DC; /* Светло-желтый текст при наведении */
+}
+
+
+
+        .jumbotron {
+            position: relative;
+            background-image: url("/static/images/26102.jpg");
+            background-color: #dc3545;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.5s ease;
+
+        }
+
+        .image-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 150px;
+            height: 150px;
+            border: 5px solid white;
+            background-image: url("/static/images/site_cover3.jpg");
+            background-size: cover;
+            border-radius: 10px;
+            overflow: hidden; /* Clip the image inside the container */
+            animation: pulse 8s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        }
+
+        .image-container img {
+            position: absolute;
+            background-size: 100%;
+            object-fit: scale-down;
+            animation: rotateImages 4s infinite;
+        }
+
+
+
+
+        /* Change the font size, color, and add text shadow */
+        .jumbotron h1,
+        .jumbotron p {
+            color: white;
+            font-size: 40px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow */
+        }
+
+        /* Keyframes for rotating images */
+        @keyframes rotateImages {
+            0% {
+                opacity: 1;
+            }
+            25% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 0;
+            }
+            75% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+
+        }
+ @keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.9;
+  }
+}
+
+
