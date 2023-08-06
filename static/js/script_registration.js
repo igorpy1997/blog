@@ -7,8 +7,8 @@ $(document).ready(function () {
             type: 'GET',
             dataType: 'html',
             success: function (data) {
-                $('#registrationModal .modal-body').html(data);
-                $("#registrationModal").modal("show");
+                $('#ModalWindow .modal-body').html(data);
+                $("#ModalWindow").modal("show");
                 $('body').addClass('modal-open');
             },
             error: function () {
@@ -33,16 +33,16 @@ $(document).ready(function () {
             data: formData,
             dataType: 'json',
             complete: function(data) {
-
                 if (data.status === 200) {
                     if ( data.responseJSON && data.responseJSON.status === "error") {
                         alert("Form failed12");
                     }
                     else {
+
                         alert("Good work")
 
 
-                        $("#registrationModal").modal("hide");
+                        $("#ModalWindow").modal("hide");
                         $('body').removeClass('modal-open');
 
                     }

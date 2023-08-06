@@ -10,6 +10,10 @@
   right: 0;
 }
 
+ #logged-in-section > * {
+  margin-right: 10px; /* Інтервал між всіма дочірніми елементами */
+}
+
 /* Стилі для іконки користувача */
 .user-icon {
   width: 40px;
@@ -23,7 +27,7 @@
   font-size: 18px;
   font-weight: bold;
   color: #333;
-    margin-right: 5px;
+
 }
 
 /* Стилі для посилання "Logout" */
@@ -42,3 +46,4 @@ a:hover {
     margin-top: 5px;
     font-size: 14px;
 }
+

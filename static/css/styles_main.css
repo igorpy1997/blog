@@ -1,8 +1,23 @@
 
         body {
-            background-image: url("/static/images/main_background.jpg");
+
             background-size: cover;
 
+
+}
+        body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/static/images/main_background.jpg");
+    background-size: cover;
+    background-position: center;
+    filter: blur(0.5px); /* Используйте значение по вашему усмотрению */
+    transform: scale(1.1); /* Используйте значение по вашему усмотрению */
+    z-index: -1; /* Поместите псевдоэлемент под контент */
 }
 
         .login-section {
@@ -30,6 +45,7 @@
 }
 
 .container.text-center{
+
   width: 200px;
   height: 100px;
   border: 3px solid;
@@ -57,8 +73,9 @@
 
 /* Стили для подзаголовка */
 .lead {
+    margin-top: -50px;
     font-size: 1.25rem; /* Увеличиваем размер шрифта */
-    color: #FFF8DC; /* Светло-желтый цвет текста */
+    color: #94b24d; /* Светло-желтый цвет текста */
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Добавляем тень для текста */
 }
 
@@ -116,7 +133,9 @@
         .jumbotron {
             position: relative;
             background-image: url("/static/images/26102.jpg");
+            background-size: cover;
             background-color: #dc3545;
+            filter: blendTrans();
             height: 200px;
             display: flex;
             justify-content: center;
@@ -124,6 +143,22 @@
             transition: background-color 0.5s ease;
 
         }
+
+             .jumbotron::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/static/images/main_background.jpg");
+    background-size: cover;
+    background-position: center;
+    filter: blur(0.5px); /* Используйте значение по вашему усмотрению */
+    transform: scale(1.1); /* Используйте значение по вашему усмотрению */
+    z-index: -1; /* Поместите псевдоэлемент под контент */
+}
+
 
         .image-container {
             position: absolute;
@@ -188,3 +223,38 @@
 }
 
 
+#resetPasswordButton {
+    left: -85px;
+    position: relative;
+    color: #e0e0e0; /* Здесь вы можете заменить #ff0000 на желаемый цвет в формате HEX или другие поддерживаемые форматы */
+}
+
+.rock-text {
+
+
+    font-family: 'Arial Black', sans-serif; /* Используйте жирный и живой шрифт */
+    font-size: 1.5rem; /* Измените размер по вашему усмотрению */
+    color: #ff0000; /* Красный цвет для агрессивности */
+    text-transform: uppercase; /* Преобразование в верхний регистр */
+    letter-spacing: 2px; /* Увеличение интервала между буквами */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Тени для рок-н-ролльного эффекта */
+}
+
+.icon-container {
+    top: -35px;
+    display: inline-block; /* Для размещения иконки рядом с текстом */
+    width: 30px; /* Ширина иконки */
+    height: 90px; /* Высота иконки */
+    position: relative; /* Для позиционирования абсолютной иконки */
+    transform: rotate(90deg);
+}
+
+.tenor-gif-embed {
+    position: absolute; /* Позиционируем иконку внутри контейнера */
+    width: 100%; /* Ширина иконки (можете настроить по необходимости) */
+    height: 100%; /* Высота иконки (можете настроить по необходимости) */
+    left: 0;
+    top: 0;
+    opacity: 0.6; /* Прозрачность для эффекта иконки на заднем плане */
+    pointer-events: none; /* Чтобы иконка не перекрывала текст и не мешала кликам */
+}

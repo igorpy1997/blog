@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/styles_main.css' %}">
     <link rel="stylesheet" href="{% static 'css/logged.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
 
 
 </head>
@@ -19,14 +20,30 @@
     <!-- Вывеска сайта -->
     <div class="jumbotron jumbotron-fluid" id="jumbotron">
         <div class="container text-center" id="container">
-            <h3 class="display-4">Igor's Blog</h3>
-            <h3 class="lead">Share your thoughts...</h3>
+            <h3 class="display-4 rock-text">My life is Rock</h3>
+            <div class="icon-container">
+                <div class="tenor-gif-embed" data-postid="11697234" data-share-method="host"
+                     data-aspect-ratio="0.5625" data-width="100%"><a href="https://tenor.com/view/fire-guitar-gif-11697234">
+                    Fire Guitar GIF</a>from
+                    <a href="https://tenor.com/search/fire-gifs">Fire GIFs</a>
+                </div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+            </div>
+
         </div>
         {% if request.user.is_authenticated %}
         <div id="logged-in-section">
-            <img src="{% static 'images/user_icon.png' %}" alt="User Icon" class="user-icon">
+            {% if request.user.photo %}
+                <img src="{{ request.user.photo.url }}" alt="User Icon" class="user-icon">
+            {% else %}
+                 <img src="{% static 'images/user_icon.png' %}" alt="User Icon" class="user-icon">
+            {% endif %}
             <span id="username">{{request.user.username}}</span>
-            <a href="{% url 'logout' %}">Logout</a>
+            <a href="{% url 'logout' %}">Logout<br></a>
+           <a href="#" id="editProfileButton" data-pk="{{ request.user.pk }}" data-toggle="modal" data-target="#ModalWindow" >Edit Profile</a>
+
+
+
+
         </div>
 
          {% else %}
@@ -37,12 +54,14 @@
            <div id="error-message" class="error-message"></div>
             <div class="button-container">
                 {% csrf_token %}
+                <a href="#" id="resetPasswordButton" data-toggle="modal" data-target="#ModalWindow" >Forget password?</a>
                 <button id="login-button" class="btn btn-primary" onclick="loginUser()">Sign in</button>
                 <!-- Кнопка для открытия модального окна -->
 
-                <button type="button" class="btn btn-primary" id = "registrationButton" data-toggle="modal" data-target="#registrationModal">
+                <button type="button" class="btn btn-primary" id = "registrationButton" data-toggle="modal" data-target="#ModalWindow">
                     Registration
                 </button>
+
 
             </div>
 
@@ -63,9 +82,11 @@
 
     <script src="{% static 'js/script_main.js' %}"></script>
     <script src="{% static 'js/script_registration.js' %}"></script>
+    <script src="{% static 'js/script_edit_profile.js' %}"></script>
+    <script src="{% static 'js/script_reset_password.js' %}"></script>
 
 </body>
 
 </html>
 
-{% include 'registration/registration_modal.html' %}
+{% include 'user_forms/modal_window.html' %}

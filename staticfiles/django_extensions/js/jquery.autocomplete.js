@@ -268,7 +268,7 @@
         this.lastProcessedValue_ = null;
 
         /**
-         * @property {string} Last value selected by the user
+         * @property {string} Last value selected by the user_forms
          * @private
          */
         this.lastSelectedValue_ = null;
