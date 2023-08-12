@@ -19,6 +19,7 @@ $(document).ready(function () {
 
     // Attach click event handler to the registration button
     $("#registrationButton").click(function () {
+        console.log("HI")
         openRegistrationModal();
     });
 

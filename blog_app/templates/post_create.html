@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <form id="create-post-form" method="post" enctype="multipart/form-data" action="{% url 'create-post' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="button" class="btn btn-success" id = "ButtonPost">Create Post</button>
+
+
+    </form>
+</body>
+</html>

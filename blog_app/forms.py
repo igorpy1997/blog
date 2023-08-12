@@ -9,7 +9,7 @@ from django.db.models import Q
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 
-from .models import CustomUser
+from .models import CustomUser, Comment, Post
 from django import forms
 
 
@@ -75,3 +75,24 @@ class CustomPasswordResetForm(forms.Form):
         user.save()
 
         return new_password
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']
+        widgets = {
+            'text': forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 400px; height: 50px;'}),
+        }
+
+
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'text', 'photo']  # Включаем поля title и photo
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),  # Стиль для поля title
+            'text': forms.Textarea(attrs={'class': 'form-control'}),   # Стиль для поля text
+            'photo': forms.FileInput(attrs={'class': 'flex'}),         # Стиль для поля photo
+        }
+

@@ -21,7 +21,8 @@ from django.urls import include
 from blog_app.views import (
     MainPageView,
     RegistrationView,
-    CustomPasswordResetView
+    CustomPasswordResetView,
+    LikePostView, GetCommentsView, AddCommentView, GetPostView,PostCreateView,
 )
 from blog_app import views
 from django.contrib import admin
@@ -37,7 +38,12 @@ urlpatterns = [
     path('login/', views.CustomLoginView.as_view(), name='login'),
     path("logout/", LogoutView.as_view(next_page="main"), name="logout"),
     path('edit_profile/<int:pk>/', views.EditProfileView.as_view(), name='edit_profile'),
-    path("custom_reset_password/", CustomPasswordResetView.as_view(), name="custom_reset_password")
+    path("custom_reset_password/", CustomPasswordResetView.as_view(), name="custom_reset_password"),
+    path('like/<int:post_id>/', LikePostView.as_view(), name='like_post'),
+    path('get_comments/<int:post_id>/', GetCommentsView.as_view(), name='get_comments'),
+    path('add_comment/<int:post_id>/', AddCommentView.as_view(), name='add_comment'),
+    path('get_post/<int:post_id>/', GetPostView.as_view(), name='get_post'),
+    path("post_create/", PostCreateView.as_view(), name="create-post"),
 ]
 
 
