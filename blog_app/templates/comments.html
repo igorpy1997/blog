@@ -1,0 +1,55 @@
+{% load static %}
+
+<div class = "commentsContainer">
+{% for comment in comments %}
+    <div class="comment">
+                <div class="created-at2">{{ comment.created_at|date:"F d, Y H:i" }}</div>
+        <div class="media">
+            <div class="media-body">
+        <div class="comment-author">
+            {% if comment.author.photo %}
+                <img src="{{ comment.author.photo.url }}" alt="User Photo" class="user-icon-small">
+            {% else %}
+                 <img src="{% static 'images/user_icon.png' %}" alt="User Icon" class="user-icon-small">
+            {% endif %}
+
+            <h5 class="mt-0 mb-1">{{ comment.temporary_name }}</h5>
+            <div class="comment-line"></div> <!-- Добавьте этот блок для создания линии -->
+        </div>
+        <div class="comment-text">
+            <p class="text">{{ comment.text }}</p>
+
+        </div>
+            </div>
+        </div>
+    </div>
+{% empty %}
+    <p>No comments available.</p>
+{% endfor %}
+
+ {% if is_paginated %}
+    <div class="pagination">
+      <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="#" data-page="1">&laquo; first</a>
+            <a href="#" data-page="{{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+           <a href="#" data-page="{{ page_obj.next_page_number }}">next</a>
+            <a href="#" data-page="{{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+      </span>
+    </div>
+  {% endif %}
+
+
+    <div class = "Adding">
+
+    </div>
+
+</div>

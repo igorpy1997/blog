@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="centered-title">My Drafts</h1>
+    <a href="{% url 'main' %}" class="return-button">Return to Main Page</a>
+    <div class="posts-container">
+        {% for draft in drafts %}
+            <div class="post card" data-post-id="{{ draft.id }}">
+                <h2 class="card-title">{{ draft.title }}</h2>
+                <!-- Остальной HTML-код для вывода информации о посте draft -->
+                <div class="post-photo-container">
+                    {% if draft.photo %}
+                        <img src="{{ draft.photo.url }}" alt="Post Photo" class="post-photo">
+                    {% else %}
+                        <p>Post Photo</p>
+                    {% endif %}
+                </div>
+                <hr>
+                <div class="description-label">description</div>
+                <div class="description">{{ draft.description }}</div>
+                <div class="text">{{ draft.text | truncatewords:30 }}</div>
+                <p class="view-more">Click "View" for reading full text</p>
+                <button class="edit-post-button" id="edit-post-button2" data-toggle="modal" data-target="#editPostModal">
+                    <i class="fa fa-edit edit-icon"></i>
+                </button>
+                <div class="draft-label">Draft</div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

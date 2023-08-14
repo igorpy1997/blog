@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Post</title>
+</head>
+<body>
+    <h1>Edit Post</h1>
+    <form id="edit-post-form" method="post" enctype="multipart/form-data" action="{% url 'edit_post' pk=pk%}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="button" class="btn btn-primary" id="saveChangesEditPost">Save</button>
+    </form>
+</body>
+</html>

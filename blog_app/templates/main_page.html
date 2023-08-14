@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="centered-title">All Posts</h1>
+    <div class = "posts_form" id = "posts-form">
+
+    </div>
+
+
+  <div class="posts-container" id="posts-container">
+    {% for post in posts %}
+
+        <div class="post card" data-post-id="{{ post.id }}">
+            <div class="created-at">{{ post.created_at|date:"F d, Y H:i" }}</div>
+
+            <div class="author">
+                <div class="author-photo-container">
+                {% if post.author.photo %}
+
+                    <img src="{{ post.author.photo.url }}" alt="User Icon" class="user-icon">
+                {% endif %}
+                </div>
+                 <a href="{% url 'author-posts' author_username=post.author.username%}">
+                {{ post.author.username }}
+                </a>
+            </div>
+
+            <h2 class = "card-title">{{ post.title }}</h2>  <!-- Добавляем название поста -->
+
+
+
+            <div class="post-photo-container">
+                 {% if post.photo %}
+                <img src="{{ post.photo.url }}" alt="Post Photo" class="post-photo">
+                    {% else %}
+                <p>Post Photo</p>
+                 {% endif %}
+
+            </div>
+
+
+
+            <hr>
+             <div class="description-label">description</div> <!-- Метка "description" -->
+             <div class="description">{{ post.description }}</div>
+         <div class="text">{{ post.text | truncatewords:30 }}</div>
+            <p class="view-more">Click "View" for reading full text</p>
+            <hr>
+            <div class="post-details" data-post-id="{{ post.id }}">
+                {% if request.user == post.author %}
+                <button class="edit-post-button" id = "edit-post-button" data-toggle="modal" data-target="#editPostModal">
+                    <i class="fa fa-edit edit-icon"></i>
+                </button>
+                <button class="delete-post-button" id="delete-post-button">
+
+                    <i class="fa fa-trash delete-icon"></i>
+                </button>
+                {% endif %}
+                <div class="likes">
+                    <span class="like-count badge badge-pill badge-danger post-likes">{{ post.likes.count }}</span>
+
+                    <i class="like-icon fa fa-heart{% if request.user in post.likes.all %} liked{% endif %}"
+                     title="{% for user in post.likes.all %}{{ user.username }}{% if not forloop.last %}, {% endif %}{% endfor %}"></i>
+                     <ul class="like-users-list" style="display: none;"></ul></div>
+                <div class="comments">
+                    <span class="badge badge-pill badge-primary">{{ post.comment_count }}</span>
+                    <i class="fa fa-comments comment-icon2"></i>
+                </div>
+                 <a href="#" class="view-post">View</a>
+            </div>
+        <div class="comment-section" style="display: none;">
+    <!-- Здесь будут отображаться комментарии -->
+        </div>
+        </div>
+    {% empty %}
+        <p>No posts available.</p>
+    {% endfor %}
+      {% if is_paginated %}
+
+    <div class="pagination justify-content-center">
+
+      <span class="page-link">
+        {% if page_obj.has_previous %}
+          <a href="?page=1" class="page-link">&laquo; first</a>
+          <li class="page-item">
+          <a href="?page={{ page_obj.previous_page_number }}" class="page-link">previous</a>
+          </li>
+              {% endif %}
+
+        <span class="page-link">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+           <li class="page-item">
+          <a href="?page={{ page_obj.next_page_number }}" class="page-link">next</a>
+           </li>
+           <li class="page-item">
+          <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">last &raquo;</a>
+           </li>
+               {% endif %}
+      </span>
+
+    </div>
+  {% endif %}
+    </div>
+
+
+{% endblock %}

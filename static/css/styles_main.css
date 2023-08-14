@@ -1,0 +1,414 @@
+
+
+
+
+
+        .login-section {
+            display: grid;
+  grid-template-rows: auto 1fr; /* Первая строка автоматическая высота, вторая занимает остаток доступного пространства */
+  place-items: center;
+    transform: translateX(-200px);
+            place-items: center;
+
+ }
+
+
+.form-control {
+    width: fit-content;
+    height: 30px;
+    padding: 8px 12px;
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s; /* Добавить плавные переходы */
+}
+.form-control:hover{
+     box-shadow: 0 0 5px rgba(0, 0, 0, 0.9);
+}
+
+.container.text-center{
+
+  width: 200px;
+  height: 100px;
+  border: 3px solid;
+  border-image: linear-gradient(45deg, #ff6b6b, #ff6b6b) 30;
+  border-image-slice: 1;
+}
+
+@keyframes rotateBorder {
+  0% {
+    border-image: linear-gradient(45deg, #8B4513, #8B4513) 30;
+  }
+  100% {
+    border-image: linear-gradient(45deg, #f0f0f0, #f0f0f0, #f0f0f0, #f0f0f0) 30;
+  }
+}
+
+
+
+
+.display-4 {
+    font-size: 2rem; /* Увеличиваем размер шрифта */
+    color: #FFF8DC; /* Светло-желтый цвет текста */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Добавляем тень для текста */
+}
+
+/* Стили для подзаголовка */
+.lead {
+    margin-top: -50px;
+    font-size: 1.25rem; /* Увеличиваем размер шрифта */
+    color: #94b24d; /* Светло-желтый цвет текста */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Добавляем тень для текста */
+}
+
+
+.form-control:focus {
+    border-color: #007bff; /* Задать цвет рамки при фокусе */
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Задать тень при фокусе */
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column; /* Кнопки будут располагаться вертикально */
+  align-items: center; /* Выравнивание по центру по горизонтали */
+  width: 300px; /* Задайте нужную ширину контейнеру */
+}
+
+.text-danger {
+  margin-left: auto; /* Перемещает элемент вправо, выравнивая по правому краю контейнера */
+}
+
+
+.btn.btn-primary:hover {
+  background: linear-gradient(45deg, #ff6b6b, #ff6b6b);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #8B4513;
+}
+
+
+
+
+
+
+
+
+        .jumbotron {
+            position: relative;
+            background-size: cover;
+            background-color: Z;
+            filter: blendTrans();
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.5s ease;
+
+        }
+
+             .jumbotron::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/static/images/main_background.jpg");
+    background-size: cover;
+    background-position: center;
+    filter: blur(0.5px); /* Используйте значение по вашему усмотрению */
+    transform: scale(1.1); /* Используйте значение по вашему усмотрению */
+    z-index: -1; /* Поместите псевдоэлемент под контент */
+}
+
+
+        .image-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 150px;
+            height: 150px;
+            border: 5px solid white;
+            background-image: url("/static/images/site_cover3.jpg");
+            background-size: cover;
+            border-radius: 10px;
+            overflow: hidden; /* Clip the image inside the container */
+            animation: pulse 8s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        }
+
+        .image-container img {
+            position: absolute;
+            background-size: 100%;
+            object-fit: scale-down;
+            animation: rotateImages 4s infinite;
+        }
+
+
+
+
+        /* Change the font size, color, and add text shadow */
+        .jumbotron h1,
+        .jumbotron p {
+            color: white;
+            font-size: 40px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow */
+        }
+
+        /* Keyframes for rotating images */
+        @keyframes rotateImages {
+            0% {
+                opacity: 1;
+            }
+            25% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 0;
+            }
+            75% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+
+        }
+ @keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.9;
+  }
+}
+
+
+#resetPasswordButton {
+    left: -85px;
+    position: relative;
+    color: #e0e0e0; /* Здесь вы можете заменить #ff0000 на желаемый цвет в формате HEX или другие поддерживаемые форматы */
+}
+
+.rock-text {
+
+
+    font-family: 'Arial Black', sans-serif; /* Используйте жирный и живой шрифт */
+    font-size: 1.5rem; /* Измените размер по вашему усмотрению */
+    color: #ff0000; /* Красный цвет для агрессивности */
+    text-transform: uppercase; /* Преобразование в верхний регистр */
+    letter-spacing: 2px; /* Увеличение интервала между буквами */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Тени для рок-н-ролльного эффекта */
+}
+
+.icon-container {
+    top: -35px;
+    display: inline-block; /* Для размещения иконки рядом с текстом */
+    width: 30px; /* Ширина иконки */
+    height: 90px; /* Высота иконки */
+    position: relative; /* Для позиционирования абсолютной иконки */
+    transform: rotate(90deg);
+}
+
+.tenor-gif-embed {
+    position: absolute; /* Позиционируем иконку внутри контейнера */
+    width: 100%; /* Ширина иконки (можете настроить по необходимости) */
+    height: 100%; /* Высота иконки (можете настроить по необходимости) */
+    left: 0;
+    top: 0;
+    opacity: 0.6; /* Прозрачность для эффекта иконки на заднем плане */
+    pointer-events: none; /* Чтобы иконка не перекрывала текст и не мешала кликам */
+}
+
+
+/* Стили для контейнера комментариев */
+.commentsContainer {
+  margin-top: 20px;
+}
+
+/* Стили для отдельного комментария */
+.comment {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Стили для даты создания комментария */
+.created-at2 {
+  font-size: 12px;
+  color: #888;
+}
+
+/* Стили для медиа-контейнера (фото пользователя и текст комментария) */
+.media {
+  display: flex;
+  align-items: flex-start;
+}
+
+/* Стили для фото пользователя (если есть) */
+.user-icon-small {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+/* Стили для имени пользователя и разделительной линии */
+.comment-author {
+  display: flex;
+  align-items: center;
+}
+
+.comment-author h5 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.comment-line {
+  width: 2px;
+  height: 100%;
+  background-color: #ccc;
+  margin: 0 10px;
+}
+
+/* Стили для текста комментария */
+.comment-text {
+  margin-top: 10px;
+}
+
+.comment-text p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+
+a {
+  -webkit-transition: .3s all ease;
+  -o-transition: .3s all ease;
+  transition: .3s all ease;
+  color: #000000; }
+  a:hover {
+    color: #000000;
+    text-decoration: none; }
+
+h1, h2, h3 {
+  color: #000000; }
+
+.text-black {
+  color: #000000 !important; }
+
+.text-primary {
+  color: #a4c639 !important; }
+
+.view-more {
+  color: #888;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.view-more:hover {
+  text-decoration: underline;
+}
+
+
+/* Стили для кнопки закрытия */
+
+.description-label {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 5px;
+}
+
+.description {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-style: italic;
+    color: #aaa;
+}
+
+
+.centered-title {
+    text-align: center;
+    padding: 20px;
+    background-color: #f39c12; /* Яркий оранжевый цвет */
+    color: #ffffff; /* Белый цвет текста */
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 10px; /* Закругленные углы */
+    margin-bottom: 20px;
+}
+
+.return-button {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.draft-label {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255, 0, 0, 0.5); /* Красный цвет с прозрачностью */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.draft-post {
+    opacity: 0.5; /* Полупрозрачный эффект для неопубликованных черновиков */
+}
+
+
+.author-photo-container {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #e53935; /* Цвет рамки - можно изменить */
+    border-radius: 50%; /* Делаем круглую форму */
+    overflow: hidden; /* Обрезаем изображение по рамке */
+    display: inline-block; /* Оставляем элемент в строке с текстом */
+    margin-right: 10px; /* Расстояние между фото и текстом */
+}
+.author-photo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Заполняем контейнер, сохраняя пропорции изображения */
+}
+
+
+    .btn-primary {
+        background-color: orange;
+        border-color: orange;
+    }
+
+    /* Красный текст для ссылки */
+
+
+     .contact-us-button-container {
+        position: absolute;
+        bottom: 120px;
+        right: -140px;
+        padding: 5px;
+        border: 2px solid orange;
+        border-radius: 5px;
+        background-color: white;
+        z-index: 999; /* Чтобы контейнер был выше остальных элементов на странице */
+    }
+
+    .contact-us-button {
+        font-size: 12px;
+        padding: 5px 10px;
+        color: orange;
+    }
+
+      .text-danger {
+        position: inherit; /* Добавляем позиционирование */
+        left: 30px; /* Задаем смещение влево */
+    }

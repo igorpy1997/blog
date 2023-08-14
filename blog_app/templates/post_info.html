@@ -1,0 +1,44 @@
+        <div class="post card" data-post-id="{{ post.id }}">
+            <div class="created-at">{{ post.created_at|date:"F d, Y H:i" }}</div>
+
+              <div class="author">
+                <div class="author-photo-container">
+                {% if post.author.photo %}
+
+                    <img src="{{ post.author.photo.url }}" alt="User Icon" class="user-icon">
+                {% endif %}
+                </div>
+                 <a href="{% url 'author-posts' author_username=post.author.username%}">
+                {{ post.author.username }}
+                </a>
+            </div>
+
+            <h2 class = "card-title">{{ post.title }}</h2>  <!-- Добавляем название поста -->
+             <div class="post-photo-container">
+             {% if post.photo %}
+                <img src="{{ post.photo.url }}" alt="Post Photo" class="post-photo">
+                    {% else %}
+                <p>Post Photo</p>
+                 {% endif %}
+             </div>
+
+            <hr>
+            <div class="text">{{ post.text }}</div>
+            <hr>
+            <hr>
+            <div class="post-details">
+
+                <div class="likes">
+                    <span class="like-count badge badge-pill badge-danger">{{ post.likes.count }}</span>
+                    <i class="like-icon fa fa-heart{% if request.user in post.likes.all %} liked{% endif %}"
+                     title="{% for user in post.likes.all %}{{ user.username }}{% if not forloop.last %}, {% endif %}{% endfor %}"></i>
+                     <ul class="like-users-list" style="display: none;"></ul></div>
+                <div class="comments">
+                    <span class="badge badge-pill badge-primary">{{ post.approved_comment_count }}</span>
+                    <i class="fa fa-comments comment-icon"></i>
+                </div>
+            </div>
+        <div class="comment-section" style="display: none;">
+    <!-- Здесь будут отображаться комментарии -->
+        </div>
+        </div>

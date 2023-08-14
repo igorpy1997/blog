@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+/* Form styles */
+
+ #add-comment-form input[type="text"] {
+    width: 8px;
+    height: 10px;
+}
+
+
+
+    </style>
+</head>
+<body>
+    <h3>Add a Comment</h3>
+<form id="add-comment-form" method="post" action="{% url 'add_comment' post_id=post_id%}">
+
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-success" type="submit" id = "saveChangesButtonComment">Add Comment</button>
+    </form>
+</body>

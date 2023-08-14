@@ -1,0 +1,33 @@
+#logged-in-section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: #f39c12; /* Яркий оранжевый цвет */
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.profile-picture img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* Круглая форма */
+    margin-right: 10px;
+}
+
+#username {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    margin-right: 10px;
+}
+
+.logged-in-links a {
+    color: white;
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+.logged-in-links a:hover {
+    opacity: 0.8;
+}

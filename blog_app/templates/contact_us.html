@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+      <h1>Contact Us</h1>
+     <form id="contac-us-post-form2" method="post" enctype="multipart/form-data" action="{% url 'contact-us' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="button" class="btn btn-primary" id="ContactUsSaveButton">Send</button>
+
+    </form>
+
+    </form>
+</body>
+</html>

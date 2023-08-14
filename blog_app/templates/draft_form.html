@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form id="edit-post-form2" method="post" enctype="multipart/form-data" action="{% url 'draft_post' pk=pk %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="button" class="btn btn-primary" id="draft-published">Publish Post</button>
+        <button type="button" class="btn btn-primary" id="draft-saved">Save as Draft</button>
+    </form>
+
+</body>
+</html>
