@@ -22,7 +22,8 @@ from blog_app.views import (
     MainPageView,
     RegistrationView,
     CustomPasswordResetView,
-    LikePostView, GetCommentsView, AddCommentView, GetPostView,PostCreateView,
+    LikePostView, GetCommentsView, AddCommentView,
+    GetPostView, PostCreateView, PostEditView, PostDeleteView, AuthorPostsView, MyDraftsView, DraftPostEditView,
 )
 from blog_app import views
 from django.contrib import admin
@@ -44,7 +45,13 @@ urlpatterns = [
     path('add_comment/<int:post_id>/', AddCommentView.as_view(), name='add_comment'),
     path('get_post/<int:post_id>/', GetPostView.as_view(), name='get_post'),
     path("post_create/", PostCreateView.as_view(), name="create-post"),
+    path('edit/<int:pk>/', PostEditView.as_view(), name='edit_post'),
+    path('delete/<int:pk>/', PostDeleteView.as_view(), name='delete_post'),
+    path('author/<str:author_username>/', AuthorPostsView.as_view(), name='author-posts'),
+    path('my-drafts/', MyDraftsView.as_view(), name='my-drafts'),
+    path('draft_post/<int:pk>/', DraftPostEditView.as_view(), name='draft_post'),
 ]
+
 
 
 if settings.DEBUG:

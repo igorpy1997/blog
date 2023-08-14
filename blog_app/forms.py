@@ -79,20 +79,63 @@ class CustomPasswordResetForm(forms.Form):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ['text']
+        fields = ['temporary_name', 'text']
+        labels = {
+            'text': '',  # Пустий рядок використовується для приховування надписі
+            'temporary_name': '',  # Пустий рядок використовується для приховування надписі
+        }
         widgets = {
             'text': forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 400px; height: 50px;'}),
-        }
+            'temporary_name': forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 400px; height: 20px;'}),
+       }
+
+    def __init__(self, *args, **kwargs):
+        custom_user = kwargs.pop('custom_user', None)
+        super(CommentForm, self).__init__(*args, **kwargs)
+
+        print("hi", custom_user)
+        if custom_user and custom_user.is_authenticated:
+            self.fields['temporary_name'].initial = custom_user.username
+            self.fields['temporary_name'].widget.attrs['readonly'] = True
+        else:
+            self.fields['temporary_name'].initial = 'anonym_user'
+
+
 
 
 
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'text', 'photo']  # Включаем поля title и photo
+        fields = ['is_published', 'title', "description", 'text', 'photo']  # Включаем поля title и photo
         widgets = {
+            'is_published': forms.HiddenInput(),
+            "description": forms.TextInput(attrs={'class': 'form-control'}),
             'title': forms.TextInput(attrs={'class': 'form-control'}),  # Стиль для поля title
             'text': forms.Textarea(attrs={'class': 'form-control'}),   # Стиль для поля text
             'photo': forms.FileInput(attrs={'class': 'flex'}),         # Стиль для поля photo
         }
+
+
+
+
+
+class PostEditForm(forms.ModelForm):
+    delete_photo = forms.BooleanField(
+        required=False,
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+    )
+
+    class Meta:
+        model = Post
+        fields = ['is_published','title', 'description', 'text', 'photo', 'delete_photo']
+        widgets = {
+            'is_published': forms.HiddenInput(),
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.TextInput(attrs={'class': 'form-control'}),
+            'text': forms.Textarea(attrs={'class': 'form-control'}),
+            'photo': forms.FileInput(attrs={'class': 'form-control-file'}),
+        }
+
+
 

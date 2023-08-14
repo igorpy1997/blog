@@ -2,7 +2,10 @@
 var post_id
 var likeState = {};
 
-
+    function getCurrentPage() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('page') || 1;
+    }
 
 function getCookie(name) {
     var cookieValue = null;
@@ -79,9 +82,22 @@ async function updatePosts(pageNumber) {
 
 
          const maxIndex = Math.min(numberOfPostsToAdd, data.posts.length);
+            const numberOfElements = Object.keys(data.posts).length;
+            var lim;
+            if (numberOfElements < maxIndex*pageNumber){
+                lim = numberOfElements;
+            }
+            else {
+                lim = maxIndex*pageNumber;
+            }
 
-        for (let i = 0; i < maxIndex; i++) {
+        for (let i = numberOfPostsToAdd*(pageNumber-1); i < lim; i++) {
+
+            console.log("this is i:", i)
+
+            console.log("Number of elements:", numberOfElements);
             const post = data.posts[i];
+            console.log("This is the post", post)
             const postElement = document.createElement('div');
             postElement.classList.add('post', 'card');
             postElement.dataset.postId = post.id;
@@ -93,13 +109,18 @@ async function updatePosts(pageNumber) {
             const author = document.createElement('div');
             author.classList.add('author');
 
+            const authorPhotoContainer = document.createElement('div');
+            authorPhotoContainer.classList.add('author-photo-container');
+
             if (post.author.photo_url) {
                 const authorPhoto = document.createElement('img');
                 authorPhoto.src = post.author.photo_url; // Замените на фактический путь к изображению
                 authorPhoto.alt = 'User Icon';
                 authorPhoto.classList.add('user-icon');
-                author.appendChild(authorPhoto);
+                authorPhotoContainer.appendChild(authorPhoto);
+
             }
+            author.appendChild(authorPhotoContainer);
 
             const authorName = document.createElement('span');
             authorName.textContent = post.author.username;
@@ -110,6 +131,14 @@ async function updatePosts(pageNumber) {
             postTitle.classList.add('card-title');
             postTitle.textContent = post.title; // Добавляем название поста
             console.log(postTitle)
+
+            const descriptionLabel = document.createElement('div');
+            descriptionLabel.classList.add('description-label');
+            descriptionLabel.textContent = 'description'; // Добавляем метку "description"
+
+            const description = document.createElement('div');
+            description.classList.add('description');
+            description.textContent = post.description; // Добавляем
 
             const postPhotoContainer = document.createElement('div');
             postPhotoContainer.classList.add('post-photo-container');
@@ -128,9 +157,17 @@ async function updatePosts(pageNumber) {
             const text = document.createElement('div');
             text.classList.add('text');
             text.textContent = post.text;
+            text.textContent = post.text.slice(0, post.text.indexOf(' ', 160)) + '...';
+
+            const viewMore = document.createElement('p');
+            viewMore.classList.add('view-more');
+            viewMore.textContent = 'Click "View" for reading full text';
+
 
             const postDetails = document.createElement('div');
             postDetails.classList.add('post-details');
+
+
 
             const likeDiv = document.createElement('div');
             likeDiv.classList.add('likes');
@@ -159,6 +196,23 @@ async function updatePosts(pageNumber) {
             commentsDiv.appendChild(commentCountBadge);
             commentsDiv.appendChild(commentIcon);
 
+
+            const editButton = document.createElement('button');
+            editButton.classList.add('edit-post-button');
+            editButton.id = 'edit-post-button';
+            editButton.innerHTML = '<i class="fa fa-edit edit-icon"></i>';
+
+
+            const deleteButton = document.createElement('button');
+            deleteButton.classList.add('delete-post-button');
+            deleteButton.id = 'delete-post-button';
+            deleteButton.innerHTML = '<i class="fa fa-trash delete-icon"></i>';
+
+            if (post.is_current_user_author) {
+                postDetails.appendChild(deleteButton);
+                postDetails.appendChild(editButton);
+            }
+
             // Элемент "View"
             const viewLink = document.createElement('a');
             viewLink.href = '#';
@@ -186,9 +240,13 @@ async function updatePosts(pageNumber) {
             postElement.appendChild(createdAt);
             postElement.appendChild(author);
             postElement.appendChild(postTitle); // Добавляем название поста
+
             postElement.appendChild(postPhotoContainer);
+            postElement.appendChild(descriptionLabel);
+            postElement.appendChild(description);
             postElement.appendChild(document.createElement('hr'));
             postElement.appendChild(text);
+            postElement.appendChild(viewMore);
             postElement.appendChild(document.createElement('hr'));
             postElement.appendChild(postDetails);
             postDetails.appendChild(commentsDiv);
@@ -206,22 +264,28 @@ async function updatePosts(pageNumber) {
 
     if (data.posts[0].is_paginated) {
         const stepLinksSpan = document.createElement('span');
-        stepLinksSpan.classList.add('step-links', 'page-link'); // Добавляем классы для стилизации
+        stepLinksSpan.classList.add('step-links', 'page-link');
+        console.log(data.posts[numberOfElements-1].page_obj.has_previous)
+        if (data.posts[numberOfElements-1].page_obj.has_previous) {
 
-        if (data.posts[0].page_obj.has_previous) {
             const firstPageLink = document.createElement('a');
             firstPageLink.href = `?page=1`;
             firstPageLink.textContent = '\u00AB first';
             firstPageLink.classList.add('page-link'); // Добавляем класс для стилизации
             stepLinksSpan.appendChild(firstPageLink);
+            const previousPageLink = document.createElement('a');
+            previousPageLink.href = `?page=${pageNumber-1}`;
+            previousPageLink.textContent = 'previous';
+            previousPageLink.classList.add('page-link'); // Добавляем класс для стилизации
+            stepLinksSpan.appendChild(previousPageLink);
         }
 
         const currentPageSpan = document.createElement('span');
         currentPageSpan.classList.add('page-link', 'current'); // Добавляем классы для стилизации
-        currentPageSpan.textContent = `Page 1 of ${data.posts[0].page_obj.paginator.num_pages}`;
+        currentPageSpan.textContent = `Page ${pageNumber} of ${data.posts[0].page_obj.paginator.num_pages}`;
         stepLinksSpan.appendChild(currentPageSpan);
 
-        if (data.posts[0].page_obj.has_next) {
+        if (data.posts[numberOfElements-1].page_obj.has_next) {
             const nextPageLink = document.createElement('a');
             nextPageLink.href = `?page=2`;
             nextPageLink.textContent = 'next';
@@ -248,22 +312,14 @@ async function updatePosts(pageNumber) {
 }
 
 
-
-$(document).ready(function() {
-
-        $.get('/post_create/', function(data) {
-            // Добавляем полученное содержимое к элементу с id "main-content"
-            $("#posts-form").prepend(data);
-
-        }),
-
-              $(document).on('click', "#ButtonPost", async function(event) {
+function submitPost(isPublished) {
+    return async function(event) {
         event.preventDefault(); // Отменяем стандартное поведение формы
 
-        var formData = new FormData($('#create-post-form')[0])
+        var formData = new FormData($('#create-post-form')[0]);
         const url = $('#create-post-form').attr('action');
-        console.log(url)
 
+        formData.append('is_published', isPublished);
 
         try {
             const response = await fetch(url, {
@@ -272,18 +328,217 @@ $(document).ready(function() {
             });
 
             if (response.ok) {
-                 const data = await response.json(); // Парсим JSON-ответ
-            if (data.status === 'success') {
+                const data = await response.json(); // Парсим JSON-ответ
+                if (data.status === 'success') {
 
-                updatePosts(1); // Обновляем список постов на странице
-            }
+                    $('#create-post-form')[0].reset();
+                    if(isPublished) {
+                        updatePosts(1); // Обновляем список постов на странице
+                        const newPage = 1;
+                        const newUrl = window.location.pathname + '?page=' + newPage;
+                        history.pushState({page: newPage}, "", newUrl);
+                        toastr.success('Successful post creating!');
+                    }
+                    else{
+                        toastr.success('Your draft was saved!');
+                    }
+                }
             } else {
                 console.error('Error sending form data:', response.statusText);
             }
         } catch (error) {
             console.error('Fetch error:', error);
         }
+    };
+}
+
+
+
+$(document).ready(function() {
+
+
+        $.get('/post_create/', function(data) {
+            // Добавляем полученное содержимое к элементу с id "main-content"
+            $("#posts-form").prepend(data);
+
+        }),
+
+
+                $(document).on('click', "#draft-published", async function (event) {
+        event.preventDefault();
+        if (confirm("Are you sure you want to publish this post?")) {
+            const formData = new FormData($('#edit-post-form2')[0]);
+            formData.append('is_published', '1'); // Set is_published to 1 for publishing
+
+            const url = $('#edit-post-form2').attr('action');
+            console.log("Url", url);
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log("DataStatus", data.status);
+                    if (data.status === 'success') {
+                        // Handle success and update page if needed
+                        console.log("Post published successfully.");
+                        window.location.reload()
+                    }
+                } else {
+                    console.error('Error sending form data:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+        }
     });
+
+    $(document).on('click', "#draft-saved", async function (event) {
+        event.preventDefault();
+        if (confirm("Are you sure you want to save this post as a draft?")) {
+            const formData = new FormData($('#edit-post-form2')[0]);
+            formData.append('is_published', '0'); // Set is_published to 0 for saving as draft
+
+            const url = $('#edit-post-form2').attr('action');
+            console.log("Url", url);
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log("DataStatus", data.status);
+                    if (data.status === 'success') {
+                        // Handle success and update page if needed
+                        console.log("Post saved as draft successfully.");
+                        window.location.reload()
+                        toastr.success("Post saved as draft successfully.");
+
+                    }
+                } else {
+                    console.error('Error sending form data:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+        }
+    });
+
+        $(document).on('click', "#delete-post-button", function() {
+            if (confirm("Are you sure you want to delete this post?")) {
+        var postId = $(this).closest(".post").data("post-id");
+
+        var csrftoken = getCookie('csrftoken');
+
+        // Добавляем CSRF-токен в заголовки запроса
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        });
+        $.ajax({
+            url: `/delete/${postId}/`,
+            type: 'DELETE',
+            success: function(response) {
+                if (response.status === 'success') {
+                    // Успешное удаление, выполните необходимые действия
+                    // Например, обновите список постов на странице
+                    updatePosts(getCurrentPage());
+                     toastr.success('Successful deletion');
+
+                } else {
+                    alert(response.message); // Вывод сообщения об ошибке
+                }
+            },
+            error: function(error) {
+                console.error('Error deleting post:', error);
+            }
+        });
+    }
+
+        });
+
+
+
+
+
+
+            $(document).on('click', "#edit-post-button", function() {
+
+        var modal = $("#ModalWindow");
+         var postId = $(this).closest(".post").data("post-id");
+        modal.find(".modal-body").empty(); // Очистка контента модального окна
+        $.get(`/edit/${postId}/`, function(data) {
+                $('#ModalWindow .modal-body').html(data);
+                $("#ModalWindow").modal("show");
+                $('body').addClass('modal-open');
+        });
+    });
+
+                        $(document).on('click', "#edit-post-button2", function() {
+
+        var modal = $("#ModalWindow");
+         var postId = $(this).closest(".post").data("post-id");
+        modal.find(".modal-body").empty(); // Очистка контента модального окна
+        $.get(`/draft_post/${postId}/`, function(data) {
+                $('#ModalWindow .modal-body').html(data);
+                $("#ModalWindow").modal("show");
+                $('body').addClass('modal-open');
+        });
+    });
+
+
+         $(document).on('click', "#saveChangesEditPost", async function(event){
+              event.preventDefault();
+              if (confirm("Are you sure?")) {
+                  var formData = new FormData($('#edit-post-form')[0])
+                  const url = $('#edit-post-form').attr('action');
+                  console.log("Url", url)
+                  try {
+                      const response = await fetch(url, {
+                          method: 'POST',
+                          body: formData
+                      });
+
+                      if (response.ok) {
+                          const data = await response.json(); // Парсим JSON-ответ
+                          console.log("DataStatus", data.status)
+                          if (data.status === 'success') {
+                              updatePosts(getCurrentPage()); // Обновляем список постов на странице
+                                const newPage = getCurrentPage();
+                                const newUrl = window.location.pathname + '?page=' + newPage;
+                                history.pushState({ page: newPage }, "", newUrl);
+
+                              $("#ModalWindow").modal("hide");
+                              $('body').removeClass('modal-open');
+                              toastr.success('Successful edition');
+
+                          }
+                      } else {
+                          console.error('Error sending form data:', response.statusText);
+                      }
+                  } catch (error) {
+                      console.error('Fetch error:', error);
+                  }
+              }
+    });
+
+
+
+
+
+
+
+
+
+       $(document).on('click', "#publish-button", submitPost(true));
+$(document).on('click', "#save-as-draft-button", submitPost(false));
 
 
 
@@ -300,10 +555,28 @@ $("#posts-container").on("click", ".view-post", function(event) {
         url: `/get_post/${postId}/`,
         method: "GET",
         success: function(data) {
-            $("#ModalWindow2 .modal-content").html(data);
+
+                   const modalHeader = `
+                <div class="modal-header2">
+                    <button type="button" class="close2" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            `;
+
+            // Содержимое модального окна
+            const modalContent = `
+                <div class="modal-content2">
+                    ${modalHeader} <!-- Вставляем заголовок перед содержимым -->
+                    <div class="modal-body">
+                        ${data} <!-- Содержимое поста -->
+                    </div>
+                </div>
+            `;
+
+            $("#ModalWindow2").html(modalContent);
             $("#ModalWindow2").modal("show");
             $('body').addClass('modal-open');
-
         },
         error: function(error) {
             console.error("Ошибка при загрузке поста:", error);
@@ -359,9 +632,9 @@ $(document).on("click", ".comment-icon", function() {
 
 
 
-    $(document).on('click', '#saveChangesButtonComment', function () {
-
-
+    $(document).on('click', '#saveChangesButtonComment', function (event) {
+        event.preventDefault();
+        var post_id = $(this).closest(".post").data("post-id");
         var form = new FormData($('#add-comment-form')[0]);
 
         console.log(post_id)
@@ -375,24 +648,20 @@ $(document).on("click", ".comment-icon", function() {
             processData: false, // Important! Tell jQuery not to process data
             contentType: false,
             dataType: 'json',
-            success: function (data) {
-
+            complete: function (data) {
+                console.log("Hiiiiiii")
                 var newComment = data.new_comment_html;
             $(".comments-list").append(newComment);
 
             // Очищаем поле ввода комментария или обновляем форму
             $('#add-comment-form')[0].reset();
-
+            toastr.success('Comment sent to moderators');
                 $(".comments-list").html(data.comments_html);
                 $(".add-comment").html(data.comment_form_html);
 
 
             },
-                    error: function (jqXHR, textStatus, errorThrown) {
-            if (jqXHR.status !== 200) {
-                //alert("Error while submitting comment: " + textStatus);
-            }
-        }
+
         });
     });
 
@@ -435,7 +704,7 @@ function updateLikeStateInAllPages(post_id, liked) {
                  $(".post[data-post-id='" + post_id + "'] .post-likes").html(data.likes_count);
                    likeState[post_id] = data.status === 'added';
                    updateLikeStateInAllPages(post_id, likeState[post_id]);
-                    var modal = $("#ModalWindow");
+                    var modal = $("#ModalWindow2");
 
     // Обновляем содержимое модального окна (примерный код, адаптируйте под свою структуру)
                     modal.find(".like-count").html(data.likes_count);
@@ -443,7 +712,7 @@ function updateLikeStateInAllPages(post_id, liked) {
 
             },
             error: function (){
-                alert("sosi")
+                toastr.error("Please login")
             }
         });
     });

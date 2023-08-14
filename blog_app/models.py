@@ -50,9 +50,10 @@ class Post(models.Model):
     title = models.CharField(max_length=200, default="No title")  # Добавляем поле заголовка
     text = models.TextField()
     likes = models.ManyToManyField(CustomUser, related_name='liked_posts', through='Like')
-
+    description = models.CharField(max_length=500, default="No description")
     photo = models.ImageField(upload_to='post_photos/', blank=True, null=True)  # Поле для фотографии
     created_at = models.DateTimeField(auto_now_add=True)
+    is_published = models.BooleanField(default=True)
 
     def __str__(self):
         return f"Post by {self.author.username} at {self.created_at}"
@@ -87,9 +88,12 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=True, null=True, default=None)
+
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    temporary_name = models.CharField(max_length=255, null=True, blank=True, default=None)
+
     APPROVAL_CHOICES = (
         ('pending', 'Pending Approval'),
         ('approved', 'Approved'),
@@ -102,13 +106,14 @@ class Comment(models.Model):
     )
 
 
-
     class Meta:
         ordering = ['created_at']  # Упорядочиваем комментарии по дате создания
 
     def __str__(self):
-        return f'Comment by {self.author.username}'
-
+        if self.author:
+            return f'Comment by fgdfgfdg {self.author.username}'
+        else:
+            return f'Comment by anonym_user'
 
 class Like(models.Model):
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)

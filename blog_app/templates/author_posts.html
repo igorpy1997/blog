@@ -1,19 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1 class="centered-title">All Posts</h1>
-    <div class = "posts_form" id = "posts-form">
-
-    </div>
-
-
-  <div class="posts-container" id="posts-container">
+    <h1 class="centered-title">Posts by {{ author.username }}</h1>
+    <a href="{% url 'main' %}" class="return-button">Return to Main Page</a>
+ <div class="posts-container" id="posts-container">
     {% for post in posts %}
 
         <div class="post card" data-post-id="{{ post.id }}">
             <div class="created-at">{{ post.created_at|date:"F d, Y H:i" }}</div>
 
-            <div class="author">
+                   <div class="author">
                 <div class="author-photo-container">
                 {% if post.author.photo %}
 
@@ -107,3 +103,4 @@
 
 
 {% endblock %}
+

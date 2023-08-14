@@ -11,7 +11,9 @@
     <form id="create-post-form" method="post" enctype="multipart/form-data" action="{% url 'create-post' %}">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="button" class="btn btn-success" id = "ButtonPost">Create Post</button>
+
+    <button type="submit" class="btn btn-success" id = "publish-button" >Publish Post</button>
+    <button type="submit" class="btn btn-secondary" id = "save-as-draft-button">Save as Draft</button>
 
 
     </form>
