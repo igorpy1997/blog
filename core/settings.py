@@ -72,8 +72,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "core.wsgi.application"
 
-
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -104,8 +102,12 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 if DEBUG:
-    INSTALLED_APPS += ["debug_toolbar", ]
-    MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware", ]  # noqa
+    INSTALLED_APPS += [
+        "debug_toolbar",
+    ]
+    MIDDLEWARE += [
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+    ]  # noqa
 
 
 # Internationalization
@@ -144,7 +146,7 @@ INTERNAL_IPS = [
 
 AUTH_USER_MODEL = "blog_app.CustomUser"
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

@@ -41,6 +41,7 @@
         </div>
         {% if request.user.is_authenticated %}
 
+
 <div class="card" id="logged-in-card">
     <div class="card-body">
         <div id="logged-in-section" class="text-right">
@@ -56,6 +57,8 @@
                 <a href="{% url 'logout' %}" class="link-opacity-10-hover">Logout</a>
                 <a href="#" id="editProfileButton" data-pk="{{ request.user.pk }}" data-toggle="modal" data-target="#ModalWindow" class="link-opacity-10-hover">Edit Profile</a>
                 <a href="{% url 'my-drafts' %}" class="link-opacity-10-hover">My Drafts</a>
+                <a href="{% url 'contact-us' %}" class="link-opacity-10-hover" id = "contact-us-button">Contact Us</a>
+
             </div>
         </div>
     </div>
@@ -73,16 +76,23 @@
            <div id="error-message" class="error-message"></div>
             <div class="button-container">
                 {% csrf_token %}
-                <a href="#" id="resetPasswordButton" data-toggle="modal" data-target="#ModalWindow" >Forget password?</a>
+                <a href="#" id="resetPasswordButton" data-toggle="modal" data-target="#ModalWindow" class="text-danger" >Forget password?</a>
                 <button id="login-button" class="btn btn-primary" onclick="loginUser()">Sign in</button>
                 <!-- Кнопка для открытия модального окна -->
 
                 <button type="button" class="btn btn-primary" id = "registrationButton" data-toggle="modal" data-target="#ModalWindow">
                     Registration
                 </button>
+                   <div class="contact-us-button-container">
+            <a href="{% url 'contact-us' %}" class="btn btn-secondary link-opacity-10-hover" id="contact-us-button2">Contact Us</a>
+        </div>
+            </div>
 
 
             </div>
+
+
+
 
             {% endif %}
         </div>

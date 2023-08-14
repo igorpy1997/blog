@@ -481,6 +481,50 @@ $(document).ready(function() {
         });
     });
 
+            $(document).on('click', "#contact-us-button2, #contact-us-button", function(event) {
+                event.preventDefault();
+                var modal = $("#ModalWindow");
+                modal.find(".modal-body").empty(); // Очистка контента модального окна
+                $.get(`/contact-us/`, function(data) {
+                    $('#ModalWindow .modal-body').html(data);
+                    $("#ModalWindow").modal("show");
+                    $('body').addClass('modal-open');
+                });
+            });
+
+
+            $(document).on('click', "#ContactUsSaveButton", async function(event) {
+    event.preventDefault();
+
+    var formData = new FormData($('#contac-us-post-form2')[0]);
+    const url = $('#contac-us-post-form2').attr('action');
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            body: formData
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            if (data.status === 'success') {
+                // Обновляем страницу после успешной отправки
+                console.log("zaeballlllllll")
+                 const newUrl = new URL(location.href);
+                newUrl.searchParams.set('contact_us_success', 'true');
+                location.href = newUrl.toString();
+            }
+        } else {
+            console.error('Error sending form data:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Fetch error:', error);
+    }
+});
+
+
+
+
                         $(document).on('click', "#edit-post-button2", function() {
 
         var modal = $("#ModalWindow");

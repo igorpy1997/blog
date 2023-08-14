@@ -75,7 +75,9 @@
   width: 300px; /* Задайте нужную ширину контейнеру */
 }
 
-
+.text-danger {
+  margin-left: auto; /* Перемещает элемент вправо, выравнивая по правому краю контейнера */
+}
 
 
 .btn.btn-primary:hover {
@@ -381,3 +383,32 @@ h1, h2, h3 {
 }
 
 
+    .btn-primary {
+        background-color: orange;
+        border-color: orange;
+    }
+
+    /* Красный текст для ссылки */
+
+
+     .contact-us-button-container {
+        position: absolute;
+        bottom: 120px;
+        right: -140px;
+        padding: 5px;
+        border: 2px solid orange;
+        border-radius: 5px;
+        background-color: white;
+        z-index: 999; /* Чтобы контейнер был выше остальных элементов на странице */
+    }
+
+    .contact-us-button {
+        font-size: 12px;
+        padding: 5px 10px;
+        color: orange;
+    }
+
+      .text-danger {
+        position: inherit; /* Добавляем позиционирование */
+        left: 30px; /* Задаем смещение влево */
+    }
