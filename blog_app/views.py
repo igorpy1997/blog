@@ -10,7 +10,6 @@ from django.core.paginator import Paginator
 from django.db.models import Count, Q
 from django.shortcuts import redirect, render, get_object_or_404
 from django.template.loader import render_to_string
-from django.utils import timezone
 from django.views import View
 from django.views.generic import TemplateView, UpdateView, ListView, DeleteView
 from django.http import JsonResponse
@@ -27,6 +26,7 @@ from .forms import (
 )
 from .models import CustomUser, Post, Comment
 from django.contrib.auth.forms import PasswordChangeForm
+from blog_app.tasks import send_notification_task
 
 
 class EditProfileView(LoginRequiredMixin, UpdateView):
@@ -288,17 +288,6 @@ class PostCreateView(LoginRequiredMixin, TemplateView):
     template_name = "post_create.html"
     form_class = PostForm
 
-    def send_notification(self, post):
-        subject = "New post"
-        message = (
-            f"New post was creates: {post.title}\n"  # noqa
-            f"Author: {post.author.username}\n"  # noqa
-            f"""Creation date: {timezone.now().strftime("%B %d, %Y %H:%M")}"""
-        )
-        recipients = CustomUser.objects.filter(is_superuser=True)
-        recipient_emails = [user.email for user in recipients]
-        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_emails, fail_silently=False)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form"] = PostForm()
@@ -310,8 +299,9 @@ class PostCreateView(LoginRequiredMixin, TemplateView):
             post = form.save(commit=False)
             post.author = request.user
             post.save()
+            print("Postpublished", post.is_published)
             if post.is_published:
-                self.send_notification(post)
+                send_notification_task.delay(post.id)
             return JsonResponse({"status": "success", "message": "Post created successfully."})
         else:
             return JsonResponse({"status": "error", "message": "Form is not valid."})
